@@ -80,7 +80,7 @@ class ProjectDetailService implements BaseServiceInterface
             $request = $params[0];
             $id = array_key_exists(1, $params) ? $params[1] : 0;
 
-            if ($request->has('delete_button')) {
+            if ($request->has('delete_button') && $request->input('delete_button') == 1) {
                 $projectDetail = $this->projectDetailRepository->find($id);
                 $file_name = $projectDetail->id . '-' . $projectDetail->upload_file;
                 $projectDetail->upload_file = null;
