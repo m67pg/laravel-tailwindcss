@@ -10,19 +10,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div>
-                        <x-label for="name" style='color:blue' :value="__('名前')" />
+                        <x-label for="name" style='color:blue' :value="__('【名前】')" />
                         <p class="block mt-1" name="name">{{ $projectInfo['project']['name'] }}</p>
                     </div>
                     <div class="mt-4">
-                        <x-label for="crowd_sourcing_name" style='color:blue' :value="__('クラウドソーシング')" />
+                        <x-label for="crowd_sourcing_name" style='color:blue' :value="__('【クラウドソーシング】')" />
                         <p class="block mt-1" name="crowd_sourcing_name">{{ $projectInfo['project']['crowd_sourcing_name'] }}</p>
                     </div>
                     <div class="mt-4">
-                        <x-label for="orderer_name" style='color:blue' :value="__('発注者')" />
+                        <x-label for="orderer_name" style='color:blue' :value="__('【発注者】')" />
                         <p class="block mt-1" name="orderer_name">{{ $projectInfo['project']['orderer_name'] }}</p>
                     </div>
                     <div class="mt-4">
-                        <x-label for="current_progress_name" style='color:blue' :value="__('進捗')" />
+                        <x-label for="current_progress_name" style='color:blue' :value="__('【進捗】')" />
                         <p class="block mt-1" name="current_progress_name">{{ $projectInfo['current_progress']->name }}</p>
                     </div>
                     <div class="mt-4">
@@ -32,9 +32,9 @@
                     </div>
                     @foreach($projectInfo['project_details'] as $key => $project_detail)
                         <div class="mt-4">
-                            <label for="project_detail" style='color:blue'>{{ '詳細' . ($key + 1) }}</label>
-                            <p class="block mt-1" name="project_detail">{{ $project_detail->name }}</p>
-                            <p class="block mt-1">{{!! Str::of($project_detail->message)->replace("\n", '<br>') !!}}</p>
+                            <label for="project_detail" style='color:blue'>{{ '【詳細' . ($key + 1) . '】' }}</label>
+                            <p class="block mt-1" style='color:green' name="project_detail">{{ $project_detail->name }}</p>
+                            <p class="block mt-1">{!! Str::of($project_detail->message)->replace("\n", '<br>') !!}</p>
                         </div>
                     @endforeach
                     <div class="mt-4">

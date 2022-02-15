@@ -23,13 +23,18 @@ class ProgressSeeder extends Seeder
             'display' => 1,
         ]);
         DB::table('progresses')->insert([
-            'name' => '11_募集終了-未応募',
+            'name' => '11_応募済み',
             'sort_order' => 11,
             'display' => 1,
         ]);
         DB::table('progresses')->insert([
-            'name' => '12_募集終了-応募済み',
+            'name' => '12_募集終了-未応募',
             'sort_order' => 12,
+            'display' => 1,
+        ]);
+        DB::table('progresses')->insert([
+            'name' => '13_募集終了-応募済み',
+            'sort_order' => 13,
             'display' => 1,
         ]);
         DB::table('progresses')->insert([
@@ -78,8 +83,18 @@ class ProgressSeeder extends Seeder
             'display' => 1,
         ]);
         DB::table('progresses')->insert([
-            'name' => '40_契約途中終了リクエスト',
+            'name' => '40_完了後フィードバック',
             'sort_order' => 40,
+            'display' => 1,
+        ]);
+        DB::table('progresses')->insert([
+            'name' => '41_完了',
+            'sort_order' => 41,
+            'display' => 1,
+        ]);
+        DB::table('progresses')->insert([
+            'name' => '50_契約途中終了リクエスト',
+            'sort_order' => 50,
             'display' => 1,
         ]);
     }

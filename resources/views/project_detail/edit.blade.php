@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form action="{{ route('project_detail.update', ['project_id' => $projectDetailInfo['project_id'], 'id' => $projectDetailInfo['project_detail']->id])}}" method="POST" name="project_detail" enctype="multipart/form-data">
@@ -37,7 +37,7 @@
                                 <a href="/storage/{{ $projectDetailInfo['project_detail']->id . '-' . $projectDetailInfo['project_detail']->upload_file }}" download="{{ $projectDetailInfo['project_detail']->upload_file }}">{{ $projectDetailInfo['project_detail']->upload_file }}</a><br>
                                 <button type="submit" class="modal-open text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{ __('削除する') }}</button>
                             @else
-                                <x-input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" name="upload_file" />
+                                <x-input class="form-control block w-1 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" name="upload_file" />
                             @endif
                         </div>
                         <div class="mt-4">

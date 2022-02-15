@@ -24,7 +24,7 @@
                         @method('PUT')
                         <div>
                             <x-label for="name" :value="__('名前')" />
-                            <x-input class="block mt-1" type="text" name="name" :value="old('name', $progress->name)" autofocus />
+                            <x-input class="block mt-1 w-full" type="text" name="name" :value="old('name', $progress->name)" autofocus />
                         </div>
                         <div class="mt-4">
                             <x-label for="sort_order" :value="__('並び順')" />
