@@ -63,6 +63,7 @@
                                 <th class="border px-4 py-2" style="width:50%">名前</th>
                                 <th class="border px-4 py-2">クラウドソーシング</th>
                                 <th class="border px-4 py-2">発注者</th>
+                                <th class="border px-4 py-2">進捗</th>
                                 <th class="border px-4 py-2">表示</th>
                                 <th class="border px-4 py-2">編集</th>
                                 <th class="border px-4 py-2">詳細</th>
@@ -74,6 +75,7 @@
                                 <td class="border px-4 py-2" style="word-break:break-all;">{{ $project->name }}</td>
                                 <td class="border px-4 py-2">{{ $project->crowd_sourcing_name }}</td>
                                 <td class="border px-4 py-2">{{ $project->orderer_name }}</td>
+                                <td class="border px-4 py-2">{{ $project->progress_name }}</td>
                                 <td class="border px-4 py-2"><a href="{{ route('project.show', $project->id) }}">表示</a></td>
                                 <td class="border px-4 py-2"><a href="{{ route('project.edit', $project->id) }}">編集</a></td>
                                 <td class="border px-4 py-2"><a href="{{ route('project_detail.index', ['project_id' => $project->id]) }}">詳細</a></td>
