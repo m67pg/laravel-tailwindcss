@@ -31,7 +31,7 @@
                         </div>
                         <div class="mt-4">
                             <x-label for="upload_file" :value="__('アップロードファイル')" />
-                            <x-input class="form-control block w-1 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" name="upload_file" :value="old('upload_file')" />
+                            <x-input class="form-control block mt-1 w-2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" name="upload_file" :value="old('upload_file')" />
                         </div>
                         <div class="mt-4">
                             <x-label for="display" :value="__('表示 / 非表示')" />
