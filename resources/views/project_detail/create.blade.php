@@ -34,6 +34,10 @@
                             <x-input class="form-control block mt-1 w-2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" name="upload_file" :value="old('upload_file')" />
                         </div>
                         <div class="mt-4">
+                            <x-label for="sort_order" :value="__('並び順')" />
+                            <x-input class="block mt-1" type="text" name="sort_order" :value="old('sort_order', '9')" />
+                        </div>
+                        <div class="mt-4">
                             <x-label for="display" :value="__('表示 / 非表示')" />
                             <input type="radio" name="display" value="1"{{ old('display', '1') == '1' ? ' checked' : '' }}>表示
                             <input type="radio" name="display" value="0"{{ old('display') == '0' ? ' checked' : '' }}>非表示

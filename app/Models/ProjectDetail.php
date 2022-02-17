@@ -22,6 +22,7 @@ class ProjectDetail extends Model
         'project_id',
         'message',
         'upload_file',
+        'sort_order',
         'display',
     ];
 }

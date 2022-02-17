@@ -30,6 +30,7 @@ class ProjectDetailRequest extends FormRequest
             'name' => 'required|max:1024',
             'message' => 'required',
             'upload_file' => 'max:1024',
+            'sort_order' => 'required|integer|min:0|max:255',
         ];
     }
 
@@ -44,6 +45,7 @@ class ProjectDetailRequest extends FormRequest
             'name' => '名前',
             'message' => 'メッセージ',
             'upload_file' => 'アップロードファイル',
+            'sort_order' => '並び順',
         ];
     }
 }

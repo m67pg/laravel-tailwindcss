@@ -41,6 +41,10 @@
                             @endif
                         </div>
                         <div class="mt-4">
+                            <x-label for="sort_order" :value="__('並び順')" />
+                            <x-input class="block mt-1" type="text" name="sort_order" :value="old('sort_order', $projectDetailInfo['project_detail']->sort_order)" />
+                        </div>
+                        <div class="mt-4">
                             <x-label for="display" :value="__('表示 / 非表示')" />
                             <input type="radio" name="display" value="1"{{ old('display', $projectDetailInfo['project_detail']->display) == '1' ? ' checked' : '' }}>表示
                             <input type="radio" name="display" value="0"{{ old('display', $projectDetailInfo['project_detail']->display) == '0' ? ' checked' : '' }}>非表示

@@ -34,7 +34,8 @@ class ProjectDetailRepository extends BaseRepository
 
         return $this->model
                     ->where('project_id', $input['project_id'])
-                    ->where('display', 1)
+                    ->whereRaw('display = 1')
+                    ->orderByRaw('sort_order ' . $order_by)
                     ->orderByRaw('created_at ' . $order_by)
                     ->get();
     }
