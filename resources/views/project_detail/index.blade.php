@@ -20,17 +20,18 @@
                                 <th class="border px-4 py-2" style="border:none;" align="right" colspan="2"><a href="{{ route('project.index', session()->has('page') ? ['page' => session('page')] : []) }}">戻る</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:75%">名前</th>
+                                <th class="border px-4 py-2" style="width:89%">名前</th>
                                 <th class="border px-4 py-2">表示 / 非表示</th>
-                                <th class="border px-4 py-2">編集</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($projectDetailInfo['project_details'] as $project_detail)
                             <tr>
-                                <td class="border px-4 py-2" style="word-break:break-all;">{{ $project_detail->name }}</td>
+                                <td class="border px-4 py-2" style="word-break:break-all;">
+                                    <a href="{{ route('project_detail.edit', ['project_id' => $projectDetailInfo['project_id'], 'id' => $project_detail->id]) }}"><i class="far fa-edit"></i></a>
+                                    {{ $project_detail->name }}
+                                </td>
                                 <td class="border px-4 py-2">{{ $project_detail->display == 1 ? '表示' : '非表示' }}</td>
-                                <td class="border px-4 py-2"><a href="{{ route('project_detail.edit', ['project_id' => $projectDetailInfo['project_id'], 'id' => $project_detail->id]) }}">編集</a></td>
                             </tr>
                             @endforeach
                         </tbody>

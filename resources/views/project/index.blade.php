@@ -60,25 +60,24 @@
                                 <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ route('project.create') }}">新規追加</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:50%">名前</th>
+                                <th class="border px-4 py-2" style="width:62%">名前</th>
                                 <th class="border px-4 py-2">クラウドソーシング</th>
                                 <th class="border px-4 py-2">発注者</th>
                                 <th class="border px-4 py-2">進捗</th>
-                                <th class="border px-4 py-2">表示</th>
-                                <th class="border px-4 py-2">編集</th>
-                                <th class="border px-4 py-2">詳細</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($projectInfo['projects'] as $project)
                             <tr>
-                                <td class="border px-4 py-2" style="word-break:break-all;">{{ $project->name }}</td>
+                                <td class="border px-4 py-2" style="word-break:break-all;">
+                                    <a href="{{ route('project.show', $project->id) }}"><i class="far fa-file"></i></a>
+                                    <a href="{{ route('project.edit', $project->id) }}"><i class="far fa-edit"></i></a>
+                                    <a href="{{ route('project_detail.index', ['project_id' => $project->id]) }}"><i class="far fa-copy"></i></a>
+                                    {{ $project->name }}
+                                </td>
                                 <td class="border px-4 py-2">{{ $project->crowd_sourcing_name }}</td>
                                 <td class="border px-4 py-2">{{ $project->orderer_name }}</td>
                                 <td class="border px-4 py-2">{{ $project->progress_name }}</td>
-                                <td class="border px-4 py-2"><a href="{{ route('project.show', $project->id) }}">表示</a></td>
-                                <td class="border px-4 py-2"><a href="{{ route('project.edit', $project->id) }}">編集</a></td>
-                                <td class="border px-4 py-2"><a href="{{ route('project_detail.index', ['project_id' => $project->id]) }}">詳細</a></td>
                             </tr>
                             @endforeach
                         </tbody>

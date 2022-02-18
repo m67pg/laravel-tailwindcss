@@ -19,19 +19,20 @@
                                 <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ isset($page) ? route('orderer.create', ['page' => $page]) : route('orderer.create') }}">新規追加</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:75%">名前</th>
+                                <th class="border px-4 py-2" style="width:82%">名前</th>
                                 <th class="border px-4 py-2">並び順</th>
                                 <th class="border px-4 py-2">表示 / 非表示</th>
-                                <th class="border px-4 py-2">編集</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orderers as $orderer)
                             <tr>
-                                <td class="border px-4 py-2" style="word-break:break-all;">{{ $orderer->name }}</td>
+                                <td class="border px-4 py-2" style="word-break:break-all;">
+                                    <a href="{{ isset($page) ? route('orderer.edit', [$orderer->id, 'page' => $page]) : route('orderer.edit', $orderer->id) }}"><i class="far fa-edit"></i></a>
+                                    {{ $orderer->name }}
+                                </td>
                                 <td class="border px-4 py-2">{{ $orderer->sort_order }}</td>
                                 <td class="border px-4 py-2">{{ $orderer->display == 1 ? '表示' : '非表示' }}</td>
-                                <td class="border px-4 py-2"><a href="{{ isset($page) ? route('orderer.edit', [$orderer->id, 'page' => $page]) : route('orderer.edit', $orderer->id) }}">編集</a></td>
                             </tr>
                             @endforeach
                         </tbody>
