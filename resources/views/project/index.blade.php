@@ -60,10 +60,11 @@
                                 <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ route('project.create') }}">新規追加</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:62%">名前</th>
+                                <th class="border px-4 py-2" style="width:52%">名前</th>
                                 <th class="border px-4 py-2">クラウドソーシング</th>
                                 <th class="border px-4 py-2">発注者</th>
                                 <th class="border px-4 py-2">進捗</th>
+                                <th class="border px-4 py-2">応募期限</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,6 +79,7 @@
                                 <td class="border px-4 py-2">{{ $project->crowd_sourcing_name }}</td>
                                 <td class="border px-4 py-2">{{ $project->orderer_name }}</td>
                                 <td class="border px-4 py-2">{{ $project->progress_name }}</td>
+                                <td class="border px-4 py-2">{{ $project->application_deadline_on }}</td>
                             </tr>
                             @endforeach
                         </tbody>
