@@ -16,12 +16,12 @@
                     <table class="table-fixed">
                         <thead>
                             <tr>
-                                <th class="border px-4 py-2" style="width:75%;border:none;" align="left"><a href="{{ route('project_detail.create', ['project_id' => $projectDetailInfo['project_id']]) }}">新規追加</a></th>
-                                <th class="border px-4 py-2" style="border:none;" align="right" colspan="2"><a href="{{ route('project.index', session()->has('page') ? ['page' => session('page')] : []) }}">戻る</a></th>
+                                <th class="border px-4 py-2" style="width:75%;border:none;" align="left"><a href="{{ route('project_detail.create', ['project_id' => $projectDetailInfo['project_id']]) }}">{{ __('新規追加') }}</a></th>
+                                <th class="border px-4 py-2" style="border:none;" align="right" colspan="2"><a href="{{ route('project.index', session()->has('page') ? ['page' => session('page')] : []) }}">{{ __('戻る') }}</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:89%">名前</th>
-                                <th class="border px-4 py-2">表示 / 非表示</th>
+                                <th class="border px-4 py-2" style="width:89%">{{ __('名前') }}</th>
+                                <th class="border px-4 py-2">{{ __('表示 / 非表示') }}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -16,12 +16,12 @@
                     <table class="table-fixed">
                         <thead>
                             <tr>
-                                <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ isset($page) ? route('crowd_sourcing.create', ['page' => $page]) : route('crowd_sourcing.create') }}">新規追加</a></th>
+                                <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ isset($page) ? route('crowd_sourcing.create', ['page' => $page]) : route('crowd_sourcing.create') }}">{{ __('新規追加') }}</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:82%">名前</th>
-                                <th class="border px-4 py-2">並び順</th>
-                                <th class="border px-4 py-2">表示 / 非表示</th>
+                                <th class="border px-4 py-2" style="width:82%">{{ __('名前') }}</th>
+                                <th class="border px-4 py-2">{{ __('並び順') }}</th>
+                                <th class="border px-4 py-2">{{ __('表示 / 非表示') }}</th>
                             </tr>
                         </thead>
                         <tbody>

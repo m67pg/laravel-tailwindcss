@@ -32,8 +32,8 @@
                         </div>
                         <div class="mt-4">
                             <x-label for="display" :value="__('表示 / 非表示')" />
-                            <input type="radio" name="display" value="1"{{ old('display', $crowd_sourcing->display) == '1' ? ' checked' : '' }}>表示
-                            <input type="radio" name="display" value="0"{{ old('display', $crowd_sourcing->display) == '0' ? ' checked' : '' }}>非表示
+                            <input type="radio" name="display" value="1"{{ old('display', $crowd_sourcing->display) == '1' ? ' checked' : '' }}>{{ __('表示') }}
+                            <input type="radio" name="display" value="0"{{ old('display', $crowd_sourcing->display) == '0' ? ' checked' : '' }}>{{ __('非表示') }}
                         </div>
                         <div class="mt-4">
                             <a href="{{ isset($page) ? route('crowd_sourcing.index', ['page' => $page]) : route('crowd_sourcing.index') }}" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">{{ __('戻る') }}</a>
