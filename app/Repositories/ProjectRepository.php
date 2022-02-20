@@ -37,6 +37,7 @@ class ProjectRepository extends BaseRepository
                      ->whereRaw('crowd_sourcings.display = 1')
                      ->whereRaw('orderers.display = 1');
 
+        // プロジェクト（名前）とプロジェクト詳細（名前・メッセージ）を入力したキーワードであいまい検索
         if (array_key_exists('keyword', $input) && $input['keyword']) {
             $keyword = '%' . $input['keyword'] . '%';
             $list->where(function($query) use ($keyword, $subQuery) {
@@ -56,15 +57,19 @@ class ProjectRepository extends BaseRepository
                         });
         }
 
+        // クラウドソーシングの検索
         if (array_key_exists('crowd_sourcing_id', $input) && $input['crowd_sourcing_id']) {
             $list->where('projects.crowd_sourcing_id', $input['crowd_sourcing_id']);
         }
 
+        // 発注者の検索
         if (array_key_exists('orderer_id', $input) && $input['orderer_id']) {
             $list->where('projects.orderer_id', $input['orderer_id']);
         }
 
+        // 進捗の検索
         if (array_key_exists('progress_id', $input) && $input['progress_id']) {
+            // プロジェクト毎の最新の進捗を取得するサブクエリー
             $subQuery = ProjectProgress::select('project_progresses.project_id',
                                                 'project_progresses.progress_id',
                                                 DB::raw('row_number() over (partition by project_progresses.project_id order by project_progresses.created_at desc) as num'))
@@ -75,6 +80,7 @@ class ProjectRepository extends BaseRepository
                                        ->groupBy('project_progresses.progress_id')
                                        ->toSql();
 
+            // プロジェクト毎の最新の進捗と入力した進捗で検索
             $list->WhereIn('projects.id', function($query) use ($input, $subQuery) {
                               $query->select('progress_info.project_id')
                                     ->from(DB::raw('(' . $subQuery . ') as progress_info'))
@@ -83,6 +89,7 @@ class ProjectRepository extends BaseRepository
                           });
         }
 
+        // プロジェクトの最新の進捗を取得するサブクエリー
         $subQuery = ProjectProgress::select('progresses.name')
                                    ->from('project_progresses')
                                    ->join('progresses', 'project_progresses.progress_id', '=', 'progresses.id')

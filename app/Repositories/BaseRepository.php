@@ -31,8 +31,10 @@ abstract class BaseRepository
      */
     public function getModelName() {
         $model_name = '';
+        // ネームスペース付のモデル名を「\」で分割してモデル名のみ取得。さらにモデル名を１文字ずつに分割して配列に取得
         $model_name_split = mb_str_split(array_slice(explode('\\', get_class($this->model)), -1)[0]);
 
+        // モデル名を１文字ずつ処理して大文字を小文字に変換。さらに小文字変換前に１文字目以外の大文字には「_」を追加
         foreach ($model_name_split as $key => $value) {
             if (ctype_upper($value)) {
                 if ($key > 0) {
