@@ -23,7 +23,7 @@ class ProjectRepository extends BaseRepository
     }
 
     /**
-     * 一覧の取得
+     * プロジェクト一覧の取得
      *
      * @param  array  $input
      * @return array

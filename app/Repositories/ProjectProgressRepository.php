@@ -8,64 +8,76 @@ use Illuminate\Support\Facades\Log;
 /**
  * プロジェクト進捗リポジトリ
  */
-class ProjectProgressRepository
+class ProjectProgressRepository extends BaseRepository
 {
     /**
-     * 現在のプロジェクト進捗を取得
-     *
-     * @param  int  $project_id
-     * @return int
+     * プロジェクト進捗モデルの取得
      */
-    public function current($project_id)
+    protected function getModel()
     {
-        Log::debug('ProjectProgressRepository::current()');
+        Log::debug('ProjectProgressRepository::getModel()');
 
-        $project_progress = ProjectProgress::select('project_progresses.*')
-                                           ->join('progresses', 'project_progresses.progress_id', '=', 'progresses.id')
-                                           ->where('project_progresses.project_id', $project_id)
-                                           ->where('progresses.display', 1)
-                                           ->orderByDesc('project_progresses.created_at')
-                                           ->limit(1)
-                                           ->get();
-        return $project_progress->count() == 0 ? 0 : $project_progress[0]->progress_id;
+        $this->model = app(ProjectProgress::class);
     }
 
     /**
      * プロジェクト進捗一覧の取得
      *
-     * @param  int  $project_id
+     * @param  array  $input
      * @return array
      */
-    public function all($project_id)
+    public function get($input = [])
     {
-        Log::debug('ProjectProgressRepository::all()');
+        Log::debug('ProjectProgressRepository::get()');
 
-        $project_progresses = ProjectProgress::select('progresses.name', 'project_progresses.created_at')
-                                           ->join('progresses', 'project_progresses.progress_id', '=', 'progresses.id')
-                                           ->where('project_progresses.project_id', $project_id)
-                                           ->where('progresses.display', 1)
-                                           ->orderByDesc('project_progresses.created_at')
-                                           ->get();
-        return $project_progresses;
+        $id = array_key_exists(0, $input) ? $input[0] : 0;
+
+        return $this->model->select('progresses.name', 'project_progresses.created_at')
+                           ->join('progresses', 'project_progresses.progress_id', '=', 'progresses.id')
+                           ->where('project_progresses.project_id', $id)
+                           ->where('progresses.display', 1)
+                           ->orderByDesc('project_progresses.created_at')
+                           ->get();
     }
 
     /**
-     * プロジェクト進捗の保存
+     * プロジェクト進捗モデルを取得
      *
-     * @param  int  $progress_id
-     * @param  int  $project_id
+     * @param  int     $id
+     * @return mixed
      */
-    public function save($progress_id, $project_id)
+    public function find($id)
+    {
+        Log::debug('ProjectProgressRepository::find()');
+
+        return $this->model->select('project_progresses.*')
+                           ->join('progresses', 'project_progresses.progress_id', '=', 'progresses.id')
+                           ->where('project_progresses.project_id', $id)
+                           ->where('progresses.display', 1)
+                           ->orderByDesc('project_progresses.created_at')
+                           ->limit(1)
+                           ->get();
+    }
+
+    /**
+     * プロジェクト進捗モデルの保存
+     *
+     * @param  array   $input
+     * @param  int     $id
+     * @return mixed
+     */
+    public function save($input, $id = 0)
     {
         Log::debug('ProjectProgressRepository::save()');
 
-        $current_progress_id = $this->current($project_id);
+        $project_id = array_key_exists('project_id', $input) ? $input['project_id'] : 0;
+        $progress_id = array_key_exists('progress_id', $input) ? $input['progress_id'] : 0;
+
+        $project_progress = $this->find($project_id);
+        $current_progress_id = $project_progress->count() == 0 ? 0 : $project_progress[0]->progress_id;
         if ($current_progress_id == 0 ||
            ($current_progress_id > 0 && $current_progress_id != $progress_id)) {
-            $project_progress = new ProjectProgress();
-            $project_progress->project_id = $project_id;
-            $project_progress->progress_id = $progress_id;
-            $project_progress->save();
+            $this->model->fill($input)->save();
         }
     }
 }

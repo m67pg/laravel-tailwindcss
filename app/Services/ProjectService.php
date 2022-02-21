@@ -98,10 +98,12 @@ class ProjectService implements BaseServiceInterface
         $id = array_key_exists(0, $params) ? $params[0] : 0;
 
         $projectInfo = $this->getProjectInfo();
+        $projectInfo['current_progress_id'] = 0;
         if ($id > 0) {
             $projectInfo['project'] = $this->projectRepository->find($id);
+            $project_progress = $this->projectProgressRepository->find($id);
+            $projectInfo['current_progress_id'] = $project_progress->count() == 0 ? 0 : $project_progress[0]->progress_id;
         }
-        $projectInfo['current_progress_id'] = $id > 0 ? $this->projectProgressRepository->current($id) : 0;
 
         return $projectInfo;
     }
@@ -120,7 +122,7 @@ class ProjectService implements BaseServiceInterface
             $id = array_key_exists(1, $params) ? $params[1] : 0;
 
             $project = $this->projectRepository->save($request->all(), $id);
-            $this->projectProgressRepository->save($request->input('progress_id', 0), $project->id);
+            $this->projectProgressRepository->save(['project_id' => $project->id, 'progress_id' =>$request->input('progress_id', 0)]);
         });
     }
 
@@ -140,9 +142,10 @@ class ProjectService implements BaseServiceInterface
 
             if (array_key_exists(0, $projectInfo['project'])) {
                 $projectInfo['project'] = $projectInfo['project'][0];
-                $current_progress_id = $this->projectProgressRepository->current($id);
+                $project_progress = $this->projectProgressRepository->find($id);
+                $current_progress_id = $project_progress->count() == 0 ? 0 : $project_progress[0]->progress_id;
                 $projectInfo['current_progress'] = $this->progressRepository->find($current_progress_id);
-                $projectInfo['project_progresses'] = $this->projectProgressRepository->all($id);
+                $projectInfo['project_progresses'] = $this->projectProgressRepository->get([$id]);
                 $projectInfo['project_details'] = $this->projectDetailRepository->get(['project_id' => $id, 'order_by' => 'asc']);
             } else {
                 unset($projectInfo['project']);
