@@ -29,7 +29,7 @@ class OrdererRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:128',
+            'name' => 'required|max:128|unique:orderers,name',
             'sort_order' => 'required|integer|min:0|max:255',
         ];
     }
