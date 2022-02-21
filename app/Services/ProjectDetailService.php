@@ -80,6 +80,7 @@ class ProjectDetailService implements BaseServiceInterface
             $request = $params[0];
             $id = array_key_exists(1, $params) ? $params[1] : 0;
 
+            // アップロードファイルの削除するボタン
             if ($request->has('delete_button') && $request->input('delete_button') == 1) {
                 $projectDetail = $this->projectDetailRepository->find($id);
                 $file_name = $projectDetail->id . '-' . $projectDetail->upload_file;
@@ -87,12 +88,17 @@ class ProjectDetailService implements BaseServiceInterface
                 $projectDetail->save();
 
                 Storage::delete('public/' . $file_name);
-            } else {
+            }
+            // 登録するボタンまたは編集するボタン
+            else
+            {
                 $projectDetail = $this->projectDetailRepository->save($request->all(), $id);
                 if ($request->file('upload_file')) {
                     $projectDetail->upload_file = $request->file('upload_file')->getClientOriginalName();
                     $projectDetail->save();
 
+                    // アップロードしたファイルはpublic\storage(storage\app\public)に保存
+                    // なおファイル名は「プロジェクト詳細ID-アップロードしたファイルの名前」に変更して保存
                     $request->file('upload_file')->storeAs('public', $projectDetail->id . '-' . $projectDetail->upload_file);
                 }
             }

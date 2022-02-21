@@ -60,7 +60,7 @@
                                 <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ route('project.create') }}">{{ __('新規追加') }}</a></th>
                             </tr>
                             <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:52%">{{ __('名前') }}</th>
+                                <th class="border px-4 py-2" style="width:50%">{{ __('名前') }}</th>
                                 <th class="border px-4 py-2">{{ __('クラウドソーシング') }}</th>
                                 <th class="border px-4 py-2">{{ __('発注者') }}</th>
                                 <th class="border px-4 py-2">{{ __('進捗') }}</th>
