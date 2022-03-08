@@ -40,7 +40,7 @@ class ProjectRepository extends BaseRepository
         // プロジェクト（名前）とプロジェクト詳細（名前・メッセージ）を入力したキーワードであいまい検索
         if (array_key_exists('keyword', $input) && $input['keyword']) {
             $keyword = '%' . $input['keyword'] . '%';
-            $list->where(function($query) use ($keyword, $subQuery) {
+            $list->where(function($query) use ($keyword) {
                             $query->where('projects.name', 'like', $keyword)
                                   ->orWhereIn('projects.id', function($query) use ($keyword) {
                                                  $query->select('project_id')

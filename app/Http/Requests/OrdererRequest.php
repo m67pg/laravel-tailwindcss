@@ -2,15 +2,27 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\OrdererRepository;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
  * 発注者フォームリクエスト
  */
 class OrdererRequest extends FormRequest
 {
+    private $repository;
+
+    /**
+     * 新しいインスタンスの生成
+     *
+     * @param  App\Repositories\OrdererRepository $repository
+     * @return void
+     */
+    public function __construct(OrdererRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * ユーザーがこのリクエストの権限を持っているかを判断する
      *
@@ -28,10 +40,19 @@ class OrdererRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:128|unique:orderers,name',
             'sort_order' => 'required|integer|min:0|max:255',
         ];
+
+        if ($this->method() === 'PUT') {
+            $orderer = $this->repository->find($this->route('orderer'));
+            if ($orderer->name == $this->input('name')) {
+                $rules['name'] = 'required|max:128';
+            }
+        }
+
+        return $rules;
     }
 
     /**

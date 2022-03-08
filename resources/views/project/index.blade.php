@@ -1,96 +1,110 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('プロジェクト一覧') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
+    <div class="py-2 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @if ($message = Session::get('success'))
-                        <div style="color:blue">{{ $message }}</div><br />
-                    @endif
+                <div class="p-2 bg-white border-b border-gray-200">
+                    <h2 class="font-semibold text-2xl text-gray-800 leading-tight py-4">
+                        {{ __('プロジェクト一覧') }}
+                    </h2>
 
-                    <form action="{{ route('project.index') }}" method="POST">
-                        @csrf
-                        @method('GET')
+                    <x-message-success />
 
-                        <div>
-                            <x-label for="keyword" :value="__('キーワード')" />
-                            <x-input class="block mt-1" type="text" name="keyword" :value="session('keyword')" autofocus />
-                        </div>
-                        <div class="mt-4">
-                            <x-label for="crowd_sourcing_id" :value="__('クラウドソーシング')" />
-                            <select class="block mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="crowd_sourcing_id">
-                                <option value=""{{ session('crowd_sourcing_id') == '' ? ' selected' : '' }}></option>
-                            @foreach($projectInfo['crowd_sourcings'] as $crowd_sourcing)
-                                <option value="{{ $crowd_sourcing->id }}"{{ session('crowd_sourcing_id') == $crowd_sourcing->id ? ' selected' : '' }}>{{ $crowd_sourcing->name }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-4">
-                            <x-label for="orderer_id" :value="__('発注者')" />
-                            <select class="block mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="orderer_id">
-                                <option value=""{{ session('orderer_id') == '' ? ' selected' : '' }}></option>
-                            @foreach($projectInfo['orderers'] as $orderer)
-                                <option value="{{ $orderer->id }}"{{ session('orderer_id') == $orderer->id ? ' selected' : '' }}>{{ $orderer->name }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-4">
-                            <x-label for="progress_id" :value="__('進捗')" />
-                            <select class="block mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="progress_id">
-                                <option value=""{{ session('progress_id') == '' ? ' selected' : '' }}></option>
-                            @foreach($projectInfo['progresses'] as $progress)
-                                <option value="{{ $progress->id }}"{{ session('progress_id') == $progress->id ? ' selected' : '' }}>{{ $progress->name }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-4">
-                            <button type="submit" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800" name="reset_button">{{ __('リセット') }}</button>
-                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="submit_button">{{ __('検索する') }}</button>
-                        </div>
-                    </form>
+                    <div class="mt-10 sm:mt-0">
+                        <div class="md:grid md:grid-cols-2 md:gap-6">
+                            <div class="mt-5 md:mt-0 md:col-span-2">
+                                <form action="{{ route('project.index') }}" method="POST">
+                                    @csrf
+                                    @method('GET')
 
-                    <table class="table-fixed">
-                        <thead>
-                            <tr>
-                                <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ route('project.create') }}">{{ __('新規追加') }}</a></th>
-                            </tr>
-                            <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:50%">{{ __('名前') }}</th>
-                                <th class="border px-4 py-2">{{ __('クラウドソーシング') }}</th>
-                                <th class="border px-4 py-2">{{ __('発注者') }}</th>
-                                <th class="border px-4 py-2">{{ __('進捗') }}</th>
-                                <th class="border px-4 py-2">{{ __('応募期限') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($projectInfo['projects'] as $project)
-                            <tr>
-                                <td class="border px-4 py-2" style="word-break:break-all;">
-                                    <a href="{{ route('project.show', $project->id) }}"><i class="far fa-file"></i></a>
-                                    <a href="{{ route('project.edit', $project->id) }}"><i class="far fa-edit"></i></a>
-                                    <a href="{{ route('project_detail.index', ['project_id' => $project->id]) }}"><i class="far fa-copy"></i></a>
-                                    {{ $project->name }}
-                                </td>
-                                <td class="border px-4 py-2">{{ $project->crowd_sourcing_name }}</td>
-                                <td class="border px-4 py-2">{{ $project->orderer_name }}</td>
-                                <td class="border px-4 py-2">{{ $project->progress_name }}</td>
-                                <td class="border px-4 py-2">{{ $project->application_deadline_on }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="6">
-                                    {{ $projectInfo['projects']->links() }}
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                    <div class="shadow overflow-hidden sm:rounded-md">
+                                        <div class="px-2 py-2 bg-white sm:p-6">
+                                            <div class="grid grid-cols-12 gap-6">
+                                                <div class="col-span-12 sm:col-span-3">
+                                                    <x-label for="keyword" :value="__('キーワード')" />
+                                                    <input type="text" name="keyword" id="keyword" autofocus="autofocus" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                </div>
+
+                                                <div class="col-span-12 sm:col-span-3">
+                                                    <x-label for="crowd_sourcing_id" :value="__('クラウドソーシング')" />
+                                                    <x-select-option :id="__('crowd_sourcing_id')" :selected="session('crowd_sourcing_id')" :options="$projectInfo['crowd_sourcings']" />
+                                                </div>
+
+                                                <div class="col-span-12 sm:col-span-3">
+                                                    <x-label for="orderer_id" :value="__('発注者')" />
+                                                    <x-select-option :id="__('orderer_id')" :selected="session('orderer_id')" :options="$projectInfo['orderers']" />
+                                                </div>
+
+                                                <div class="col-span-12 sm:col-span-3">
+                                                    <x-label for="progress_id" :value="__('進捗')" />
+                                                    <x-select-option :id="__('progress_id')" :selected="session('progress_id')" :options="$projectInfo['progresses']" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-2 bg-gray-50 text-right sm:px-6">
+                                            <button type="submit" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800" name="reset_button">{{ __('リセット') }}</button>
+                                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="submit_button">{{ __('検索する') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col py-4">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col">
+                                                    <div class="px-6 py-1 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('名前') }}</div>
+                                                    <div class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('発注者') }}</div>
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('クラウドソーシング') }}</th>
+                                                <th scope="col">
+                                                    <div class="px-6 py-1 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('進捗') }}</div>
+                                                    <div class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('応募期限') }}</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            @foreach ($projectInfo['projects'] as $project)
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <a href="{{ route('project.show', $project->id) }}"><i class="far fa-file"></i></a>
+                                                        <a href="{{ route('project.edit', $project->id) }}"><i class="far fa-edit"></i></a>
+                                                        <a href="{{ route('project_detail.index', ['project_id' => $project->id]) }}"><i class="far fa-copy"></i></a>
+                                                        {{ $project->name }}
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">{{ $project->orderer_name }}</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $project->crowd_sourcing_name }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">{{ $project->progress_name }}</div>
+                                                    <div class="text-sm text-gray-500">{{ $project->application_deadline_on }}</div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="px-4 py-4">
+                                                    <x-create-button href="{{ route('project.create') }}" />
+                                                </td>
+                                                <td colspan="2">
+                                                @if ($projectInfo['projects']->lastPage() > 1)
+                                                    {{ $projectInfo['projects']->links() }}
+                                                @endif
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

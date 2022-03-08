@@ -1,49 +1,59 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('発注者一覧') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
+    <div class="py-2 w-2/3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @if ($message = Session::get('success'))
-                        <div style="color:blue">{{ $message }}</div><br />
-                    @endif
+                <div class="p-2 bg-white">
+                    <h2 class="font-semibold text-2xl text-gray-800 leading-tight py-4">
+                        {{ __('発注者一覧') }}
+                    </h2>
 
-                    <table class="table-fixed">
-                        <thead>
-                            <tr>
-                                <th class="border px-4 py-2" style="border:none;" align="left" colspan="2"><a href="{{ isset($page) ? route('orderer.create', ['page' => $page]) : route('orderer.create') }}">{{ __('新規追加') }}</a></th>
-                            </tr>
-                            <tr class="bg-gray-100">
-                                <th class="border px-4 py-2" style="width:82%">{{ __('名前') }}</th>
-                                <th class="border px-4 py-2">{{ __('並び順') }}</th>
-                                <th class="border px-4 py-2">{{ __('表示 / 非表示') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orderers as $orderer)
-                            <tr>
-                                <td class="border px-4 py-2" style="word-break:break-all;">
-                                    <a href="{{ isset($page) ? route('orderer.edit', [$orderer->id, 'page' => $page]) : route('orderer.edit', $orderer->id) }}"><i class="far fa-edit"></i></a>
-                                    {{ $orderer->name }}
-                                </td>
-                                <td class="border px-4 py-2">{{ $orderer->sort_order }}</td>
-                                <td class="border px-4 py-2">{{ $orderer->display == 1 ? '表示' : '非表示' }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4">
-                                    {{ $orderers->links() }}
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <x-message-success />
+
+                    <div class="flex flex-col py-2">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('名前') }}</th>
+                                                <th scope="col" class="px-6 py-3 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('並び順') }}</th>
+                                                <th scope="col" class="px-6 py-3 text-left font-medium text-gray-900 uppercase tracking-wider">{{ __('表示 / 非表示') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            @foreach ($orderers as $orderer)
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <a href="{{ isset($page) ? route('orderer.edit', [$orderer->id, 'page' => $page]) : route('orderer.edit', $orderer->id) }}"><i class="far fa-edit"></i></a>
+                                                        {{ $orderer->name }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $orderer->sort_order }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $orderer->display == 1 ? '表示' : '非表示' }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="px-4 py-4" colspan="3">
+                                                    <div class="py-1.5" style="float:left;">
+                                                        <x-create-button href="{{ isset($page) ? route('orderer.create', ['page' => $page]) : route('orderer.create') }}" />
+                                                    </div>
+                                                    @if ($orderers->lastPage() > 1)
+                                                    <div>
+                                                        {{ $orderers->links() }}
+                                                    </div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

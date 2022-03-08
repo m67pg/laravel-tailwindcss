@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\ProgressRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -9,6 +10,19 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class ProgressRequest extends FormRequest
 {
+    private $repository;
+
+    /**
+     * 新しいインスタンスの生成
+     *
+     * @param  App\Repositories\ProgressRepository $repository
+     * @return void
+     */
+    public function __construct(ProgressRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * ユーザーがこのリクエストの権限を持っているかを判断する
      *
@@ -26,10 +40,19 @@ class ProgressRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:128|unique:progresses,name',
             'sort_order' => 'required|integer|min:0|max:255',
         ];
+
+        if ($this->method() === 'PUT') {
+            $progress = $this->repository->find($this->route('progress'));
+            if ($progress->name == $this->input('name')) {
+                $rules['name'] = 'required|max:128';
+            }
+        }
+
+        return $rules;
     }
 
     /**

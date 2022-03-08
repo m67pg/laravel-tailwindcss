@@ -1,37 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('クラウドソーシング新規追加') }}
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+                {{ __('クラウドソーシング新規追加') }}
+            </h2>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+
                     <form action="{{ isset($page) ? route('crowd_sourcing.store', ['page' => $page]) : route('crowd_sourcing.store') }}" method="POST">
-                        @if ($errors->any())
-                            <div class="card-text text-left alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach($errors->all() as $error)
-                                        <li style="color:red;">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div><br />
-                        @endif
+                        <x-validation-errors :errors="$errors" />
 
                         @csrf
                         <div>
                             <x-label for="name" :value="__('名前')" />
-                            <x-input class="block mt-1" type="text" name="name" :value="old('name')" autofocus />
+                            <x-input class="block mt-1 w-56" type="text" name="name" :value="old('name')" autofocus />
                         </div>
                         <div class="mt-4">
                             <x-label for="sort_order" :value="__('並び順')" />
-                            <x-input class="block mt-1" type="text" name="sort_order" :value="old('sort_order', '9')" />
+                            <x-input class="block mt-1 w-16" type="text" name="sort_order" :value="old('sort_order', '9')" />
                         </div>
                         <div class="mt-4">
-                            <a href="{{ isset($page) ? route('crowd_sourcing.index', ['page' => $page]) : route('crowd_sourcing.index') }}" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">{{ __('戻る') }}</a>
-                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('登録する') }}</button>
+                            <x-back-button href="{{ isset($page) ? route('crowd_sourcing.index', ['page' => $page]) : route('crowd_sourcing.index') }}" />
+                            <x-save-button />
                         </div>
                     </form>
                 </div>
