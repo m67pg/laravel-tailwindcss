@@ -14,11 +14,20 @@
                     <p>{{ $project_progress->created_at }} : {{ $project_progress->name }}</p>
                     @endforeach
                 </x-project-show>
+                @php
+                    $loop_even = 0;
+                @endphp
                 @foreach($projectInfo['project_details'] as $project_detail)
-                <x-project-show :even="$loop->even" :label="$project_detail->name" :is_tag="true" >
+                @php
+                    $loop_even = $loop->even ? 1 : 2;
+                @endphp
+                <x-project2show :even="$loop->even" :label="$project_detail->name" :is_tag="true" >
                     {!! Str::of($project_detail->message)->replace("\n", '<br>') !!}
                 </x-project-show>
                 @endforeach
+                @if($loop_even == 2)
+                    </div>
+                @endif
             </dl>
         </div>
         <div class="mt-4 px-2 py-4">
