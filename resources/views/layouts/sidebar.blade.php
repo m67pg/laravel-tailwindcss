@@ -47,6 +47,17 @@
                                     <span class="mx-4 font-medium">{{ __('進捗') }}</span>
                                 </a>
                             </li>
+
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200" href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span class="mx-4 font-medium">{{ __('ログアウト') }}</span>
+                                    </a>
+                                </form>
+                            </li>
                         </ul>
                     </aside>
                 </div>
